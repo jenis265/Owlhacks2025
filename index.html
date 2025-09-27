@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ActionReaction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5faff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background: #0077cc;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; }
+    header .user {
+      font-weight: bold;
+    }
+    main {
+      margin-top: 40px;
+    }
+    .btn {
+      background: #0077cc;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #005fa3;
+    }
+    #camera-icon {
+      font-size: 50px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    #product-info {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ActionReaction</h1>
+    <div class="user" id="userName"></div>
+  </header>
+
+  <main>
+    <div id="login-section">
+      <h2>Welcome to ActionReaction</h2>
+      <p>Your allergy-safe food scanner.</p>
+      <button class="btn" onclick="login('account')">Create Account</button>
+      <button class="btn" onclick="login('guest')">Continue as Guest</button>
+    </div>
+
+    <div id="allergen-section" style="display:none;">
+      <h2>Enter Your Allergens</h2>
+      <input type="text" id="allergens" placeholder="e.g., peanuts, gluten" />
+      <br/>
+      <button class="btn" onclick="saveAllergens()">Save Allergens</button>
+    </div>
+
+    <div id="scanner-section" style="display:none;">
+      <h2>Scan a Product</h2>
+      <img src="https://via.placeholder.com/300x200.png?text=Food+Product" alt="Food product"/>
+      <div id="camera-icon" onclick="showBarcodeInput()">📷</div>
+
+      <div id="barcode-input" style="display:none; margin-top:20px;">
+        <input type="text" id="barcode" placeholder="Enter barcode number..." />
+        <button class="btn" onclick="scanProduct()">Search</button>
+      </div>
+
+      <div id="result"></div>
+      <div id="product-info"></div>
+      <button class="btn" id="scan-again" style="display:none;" onclick="resetScan()">Scan Again</button>
+    </div>
+  </main>
+
+  <script>
+    let user = "";
+    let allergens = [];
+
+    function login(type) {
+      if (type === "account") {
+        user = prompt("Enter your name:");
+      } else {
+        user = "Guest";
+      }
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("allergen-section").style.display = "block";
+      document.getElementById("userName").textContent = "Hi, " + user;
+    }
+
+    function saveAllergens() {
+      const input = document.getElementById("allergens").value;
+      allergens = input.split(",").map(a => a.trim().toLowerCase());
+      document.getElementById("allergen-section").style.display = "none";
+      document.getElementById("scanner-section").style.display = "block";
+    }
+
+    function showBarcodeInput() {
+      document.getElementById("barcode-input").style.display = "block";
+    }
+
+    async function scanProduct() {
+      const barcode = document.getElementById("barcode").value;
+      const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+      const data = await res.json();
+      if (!data.product) {
+        document.getElementById("result").textContent = "Product not found!";
+        return;
+      }
+
+      const ingredients = data.product.ingredients_text || "";
+      document.getElementById("product-info").textContent = "Ingredients: " + ingredients;
+
+      let unsafe = allergens.some(a => ingredients.toLowerCase().includes(a));
+      if (unsafe) {
+        document.getElementById("result").textContent = "❌ Yes, you will regret it!";
+      } else {
+        document.getElementById("result").textContent = "✅ No, you won’t regret it!";
+      }
+      document.getElementById("scan-again").style.display = "inline-block";
+    }
+
+    function resetScan() {
+      document.getElementById("barcode").value = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("product-info").textContent = "";
+      document.getElementById("scan-again").style.display = "none";
+    }
+  </script>
+</body>
+</html>
