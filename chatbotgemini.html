@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Action-Reaction - Your Allergy-Safe product Scanner</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Twitter Widget Script -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         /* Custom styles for the main app */
@@ -146,9 +143,7 @@
 </head>
 <body class="text-[#000000]">
 
-    <!-- Header Section -->
     <header class="bg-[#0081A7] text-[#FFFFFF] shadow-lg sticky top-0 z-50">
-        <!-- Main Header -->
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="w-1/3 text-left">
                 <button id="signOutBtn" data-page="home" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2 hidden">Sign Out</button>
@@ -160,7 +155,6 @@
                 <span id="userGreeting" class="font-semibold hidden"></span>
             </div>
         </div>
-        <!-- Subheader Navigation -->
         <nav id="subheader" class="bg-[#00AFB9]">
             <div class="container mx-auto flex justify-center items-center px-6 py-2">
                 <div class="flex justify-center items-center gap-4 sm:gap-8">
@@ -175,13 +169,10 @@
         </nav>
     </header>
 
-    <!-- Main Content: This container will hold all the 'pages' -->
     <main class="container mx-auto p-4 sm:p-8">
         
-        <!-- Home Page Content -->
         <div id="home" class="page-content active">
             
-            <!-- Initial Welcome Section -->
             <div id="welcome-section" class="home-section active text-center mt-12 sm:mt-16 relative">
                  <div class="relative z-10">
                     <h2 class="text-4xl font-bold text-gray-900 mb-2">Welcome to Action-Reaction</h2>
@@ -193,7 +184,6 @@
                  </div>
             </div>
 
-            <!-- Create Account Section -->
             <div id="create-account-section" class="home-section max-w-md mx-auto mt-16">
                 <p id="createAccountError" class="text-center text-red-500 font-semibold mb-4"></p>
                 <div class="bg-white p-8 rounded-lg shadow-xl">
@@ -209,7 +199,6 @@
                 </div>
             </div>
 
-            <!-- Login Section -->
             <div id="login-section" class="home-section max-w-md mx-auto mt-16">
                 <p id="loginError" class="text-center text-red-500 font-semibold mb-4"></p>
                 <div class="bg-white p-8 rounded-lg shadow-xl">
@@ -227,45 +216,28 @@
 
         </div>
 
-        <!-- Scan Food Page Content (Home page after login) -->
         <div id="scan" class="page-content">
             <div class="text-center mt-16">
                 <h2 class="text-3xl font-bold">Scan a Product</h2>
-                <p class="mt-2 mb-6 text-gray-700">Upload a barcode image or enter the number below.</p>
+                <p class="mt-2 mb-6 text-gray-700">Enter the barcode number below.</p>
                 
                 <img 
                     src="images/image.png" 
                     alt="Illustration of a phone scanning a barcode"
                     class="mx-auto mb-8 rounded-lg w-1/2"> 
 
-                <!-- START: New elements for file upload and barcode input -->
                 <div class="max-w-md mx-auto">
-                    <!-- Styled File Upload Button -->
-                    <label for="imageUpload" class="w-full inline-block bg-[#FED9B7] hover:bg-opacity-80 text-[#000000] font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
-                        Upload Image
-                    </label>
-                    <input type="file" id="imageUpload" class="hidden" accept="image/*">
-                    
-                    <!-- "OR" Separator -->
-                    <div class="my-4 flex items-center">
-                        <hr class="flex-grow border-t border-gray-300">
-                        <span class="px-2 text-gray-500 font-semibold">OR</span>
-                        <hr class="flex-grow border-t border-gray-300">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input id="barcodeInput" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter barcode number" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <button id="barcodeEnterBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Enter</button>
                     </div>
-
-                    <!-- Barcode Text Input -->
-                    <div>
-                        <input id="barcodeInput" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter barcode number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9] text-center">
-                        <p id="barcodeError" class="text-red-500 text-sm mt-2 font-semibold hidden">
-                            Please enter a valid barcode number.
-                        </p>
-                    </div>
+                    <p id="barcodeError" class="text-red-500 text-sm mt-2 font-semibold hidden">
+                        Please enter a valid barcode number.
+                    </p>
                 </div>
-                <!-- END: New elements -->
-            </div>
+                </div>
         </div>
 
-        <!-- Shopping List Page Content -->
         <div id="shopping" class="page-content">
         <div class="max-w-2xl mx-auto">
         <div class="bg-white p-4 rounded-lg shadow-md mb-8">
@@ -294,7 +266,6 @@
         </div>
          </div>
     </div>
-        <!-- Community Page Content -->
         <div id="community" class="page-content">
              <div class="max-w-lg mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold mb-4">Join the Conversation!</h2>
@@ -307,7 +278,6 @@
             </div>
         </div>
 
-        <!-- Allergens Page Content -->
         <div id="allergens" class="page-content">
             <div class="max-w-md mx-auto mt-8">
                 <h2 class="text-3xl font-bold text-center mb-6">Manage Your Allergens</h2>
@@ -319,12 +289,10 @@
                      <p id="allergenError" class="text-center text-red-500 font-semibold mt-2"></p>
                 </div>
                 <div id="allergenList" class="space-y-2">
-                    <!-- Allergens will be dynamically inserted here -->
-                </div>
+                    </div>
             </div>
         </div>
 
-        <!-- Recipes Page Content -->
         <div id="recipes" class="page-content">
             <div class="max-w-2xl mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold">Get Custom Recipe Ideas</h2>
@@ -336,7 +304,6 @@
             </div>
         </div>
 
-        <!-- Chatbot Page Content -->
         <div id="chatbot" class="page-content">
             <div class="max-w-2xl mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold">Allergy-Safe Chatbot</h2>
@@ -373,6 +340,7 @@
             }
         }; 
         let currentUser = null; // Track the logged-in user
+        let Barcode = []; // Array to store the valid barcode
 
         // --- Element Selectors ---
         const navButtons = document.querySelectorAll('.nav-button');
@@ -421,9 +389,10 @@
         const userInput = document.getElementById('user_input');
         const botOutput = document.getElementById('bot_output');
 
-        // Barcode validation selectors
+        // Barcode selectors
         const barcodeInput = document.getElementById('barcodeInput');
         const barcodeError = document.getElementById('barcodeError');
+        const barcodeEnterBtn = document.getElementById('barcodeEnterBtn');
 
 
         // --- Functions ---
@@ -573,15 +542,29 @@
         askBotBtn.addEventListener('click', askBot);
         userInput.addEventListener('keydown', e => e.key === 'Enter' && askBot());
 
-        barcodeInput.addEventListener('input', () => {
-            const value = barcodeInput.value;
-            // This regex checks if the string contains only digits (0-9)
+        // START: Barcode entry logic
+        function handleBarcodeEntry() {
+            const value = barcodeInput.value.trim();
+            // Regex checks if the string contains only digits (0-9)
             if (value && !/^\d+$/.test(value)) {
-                barcodeError.classList.remove('hidden'); // Show error
+                barcodeError.classList.remove('hidden'); // Show error if input is not empty and invalid
+            } else if (value && /^\d+$/.test(value)) {
+                barcodeError.classList.add('hidden'); // Hide error on valid submission
+                Barcode = [value]; // Replace prior entries in the array
+                console.log('Barcode stored:', Barcode); // You can see the stored barcode in the browser console
+                barcodeInput.value = ''; // Clear input field
             } else {
-                barcodeError.classList.add('hidden'); // Hide error
+                 barcodeError.classList.add('hidden'); // Hide error if input is empty
+            }
+        }
+
+        barcodeEnterBtn.addEventListener('click', handleBarcodeEntry);
+        barcodeInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                handleBarcodeEntry();
             }
         });
+        // END: Barcode entry logic
 
         createAccountEnterBtn.addEventListener('click', () => {
             const username = newUsernameInput.value.trim();
@@ -700,4 +683,3 @@
 
 </body>
 </html>
-
