@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Action-Reaction - Your Allergy-Safe Food Scanner</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Twitter Widget Script -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         /* Custom styles for the main app */
@@ -127,7 +130,9 @@
 </head>
 <body class="text-[#000000]">
 
+    <!-- Header Section -->
     <header class="bg-[#0081A7] text-[#FFFFFF] shadow-lg sticky top-0 z-50">
+        <!-- Main Header -->
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="w-1/3 text-left">
                 <button id="signOutBtn" data-page="home" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2 hidden">Sign Out</button>
@@ -139,6 +144,7 @@
                 <span id="userGreeting" class="font-semibold hidden"></span>
             </div>
         </div>
+        <!-- Subheader Navigation -->
         <nav id="subheader" class="bg-[#00AFB9]">
             <div class="container mx-auto flex justify-center items-center px-6 py-2">
                 <div class="flex justify-center items-center gap-4 sm:gap-8">
@@ -151,10 +157,13 @@
         </nav>
     </header>
 
+    <!-- Main Content: This container will hold all the 'pages' -->
     <main class="container mx-auto p-4 sm:p-8">
         
+        <!-- Home Page Content -->
         <div id="home" class="page-content active">
             
+            <!-- Initial Welcome Section -->
             <div id="welcome-section" class="home-section active text-center mt-12 sm:mt-16 relative">
                  <div class="relative z-10">
                     <h2 class="text-4xl font-bold text-gray-900 mb-2">Welcome to Action-Reaction</h2>
@@ -166,6 +175,7 @@
                  </div>
             </div>
 
+            <!-- Create Account Section -->
             <div id="create-account-section" class="home-section max-w-md mx-auto mt-16">
                 <p id="createAccountError" class="text-center text-red-500 font-semibold mb-4"></p>
                 <div class="bg-white p-8 rounded-lg shadow-xl">
@@ -181,6 +191,7 @@
                 </div>
             </div>
 
+            <!-- Login Section -->
             <div id="login-section" class="home-section max-w-md mx-auto mt-16">
                 <p id="loginError" class="text-center text-red-500 font-semibold mb-4"></p>
                 <div class="bg-white p-8 rounded-lg shadow-xl">
@@ -198,6 +209,7 @@
 
         </div>
 
+        <!-- Scan Food Page Content -->
         <div id="scan" class="page-content">
         <div class="text-center mt-16">
         
@@ -212,68 +224,43 @@
         </div>
         </div>
 
+        <!-- Shopping List Page Content -->
         <div id="shopping" class="page-content">
-            <div class="list-container max-w-lg mx-auto">
-                
-                <h2 class="bg-[#0081A7] text-[#FDFCDC] font-bold shadow-lg py-8 mb-6 rounded-lg flex items-center justify-center" style="font-family: Georgia, serif; font-size: 3.2em; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">
-                    My Shopping List
-                    <img src="images/shopping-bag (1).png" alt="Shopping bag icon" class="w-16 h-16 ml-4">
-                </h2>
-
-                <h2>Food & Groceries</h2>
-                <label class="shopping-item">
-                    <input type="checkbox" checked>
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Avocados</span>
-                </label>
-                <label class="shopping-item">
-                    <input type="checkbox">
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Sourdough Bread</span>
-                </label>
-                <label class="shopping-item">
-                    <input type="checkbox">
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Oat Milk</span>
-                </label>
-        
-                <h2>Cosmetics & Skincare</h2>
-                <label class="shopping-item">
-                    <input type="checkbox">
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Mascara</span>
-                </label>
-                <label class="shopping-item">
-                    <input type="checkbox" checked>
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Sunscreen (SPF 50)</span>
-                </label>
-                <label class="shopping-item">
-                    <input type="checkbox">
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Vitamin C Serum</span>
-                </label>
-                
-                <h2>Household</h2>
-                <label class="shopping-item">
-                    <input type="checkbox">
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Hand Soap</span>
-                </label>
-                 <label class="shopping-item">
-                    <input type="checkbox" checked>
-                    <span class="custom-checkbox"></span>
-                    <span class="item-text">Paper Towels</span>
-                </label>
+        <div class="max-w-2xl mx-auto">
+        <div class="bg-white p-4 rounded-lg shadow-md mb-8">
+            <h3 class="text-xl font-bold mb-4 text-center">Add a New Item</h3>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input id="newItemInput" type="text" placeholder="e.g., Avocados" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                <select id="newItemCategory" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                    <option value="food">Food & Groceries</option>
+                    <option value="cosmetics">Cosmetics & Skincare</option>
+                    <option value="household">Household</option>
+                </select>
+                <button id="addItemBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Add</button>
             </div>
+            <p id="shoppingListError" class="text-center text-red-500 font-semibold mt-2"></p>
         </div>
 
+        <div class="list-container">
+            <h2>Food & Groceries</h2>
+            <div id="food-list" class="mb-6"></div>
+
+            <h2>Cosmetics & Skincare</h2>
+            <div id="cosmetics-list" class="mb-6"></div>
+            
+            <h2>Household</h2>
+            <div id="household-list" class="mb-6"></div>
+        </div>
+         </div>
+    </div>
+        <!-- Community Page Content -->
         <div id="community" class="page-content">
             <div class="flex justify-center mt-8">
                 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Having a peanut allergy is childish</p>&mdash; Sokhulu (@BonganiNtuli) <a href="https://twitter.com/BonganiNtuli/status/1968380586273423713?ref_src=twsrc%5Etfw">September 17, 2025</a></blockquote>
             </div>
         </div>
 
+        <!-- Allergens Page Content -->
         <div id="allergens" class="page-content">
             <div class="text-center mt-16">
                 <h2 class="text-3xl font-bold">Manage Your Allergens</h2>
@@ -284,141 +271,242 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- State and Data ---
-            const Users = {}; // In-memory user store {username: password}
-            let currentUser = null; // Track the logged-in user
-
-            // --- Element Selectors ---
-            const navButtons = document.querySelectorAll('.nav-button');
-            const pages = document.querySelectorAll('.page-content');
-            const subheader = document.getElementById('subheader');
-            const homeSections = document.querySelectorAll('.home-section');
-            const userGreeting = document.getElementById('userGreeting');
-            const signOutBtn = document.getElementById('signOutBtn');
-
-            const showLoginBtn = document.getElementById('showLoginBtn');
-            const showCreateAccountBtn = document.getElementById('showCreateAccountBtn');
-            const backBtns = document.querySelectorAll('.back-btn');
-            
-            const createAccountEnterBtn = document.getElementById('createAccountEnterBtn');
-            const loginEnterBtn = document.getElementById('loginEnterBtn');
-            
-            const createAccountError = document.getElementById('createAccountError');
-            const loginError = document.getElementById('loginError');
-
-            // --- Input Field Selectors for Enter Key ---
-            const newUsernameInput = document.getElementById('newUsername');
-            const newPasswordInput = document.getElementById('newPassword');
-            const loginUsernameInput = document.getElementById('loginUsername');
-            const loginPasswordInput = document.getElementById('loginPassword');
-
-            // --- Functions ---
-
-            function showPage(pageId) {
-                pages.forEach(page => page.classList.toggle('active', page.id === pageId));
-                
-                const isLoggedInPage = pageId !== 'home';
-                subheader.style.display = isLoggedInPage ? 'block' : 'none';
-                
-                if (isLoggedInPage && currentUser) {
-                    userGreeting.textContent = `Hi, ${currentUser}`;
-                    userGreeting.classList.remove('hidden');
-                    signOutBtn.classList.remove('hidden');
-                } else {
-                    userGreeting.classList.add('hidden');
-                    signOutBtn.classList.add('hidden');
-                    currentUser = null; // Clear user on sign out
-                }
-                
-                if (pageId === 'home') {
-                    showHomeSection('welcome-section');
-                }
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- State and Data ---
+        // The user store is now an object where each user has a password and their own shopping list.
+        const Users = {
+            "testuser": {
+                password: "password123",
+                shoppingList: [
+                    { id: 1, text: 'Avocados', category: 'food', checked: true },
+                    { id: 2, text: 'Oat Milk', category: 'food', checked: false },
+                    { id: 3, text: 'Sunscreen', category: 'cosmetics', checked: false },
+                ]
             }
+        }; 
+        let currentUser = null; // Track the logged-in user
 
-            function showHomeSection(sectionId) {
-                homeSections.forEach(section => section.classList.toggle('active', section.id === sectionId));
-                createAccountError.textContent = '';
-                loginError.textContent = '';
-            }
+        // --- Element Selectors ---
+        const navButtons = document.querySelectorAll('.nav-button');
+        const pages = document.querySelectorAll('.page-content');
+        const subheader = document.getElementById('subheader');
+        const homeSections = document.querySelectorAll('.home-section');
+        const userGreeting = document.getElementById('userGreeting');
+        const signOutBtn = document.getElementById('signOutBtn');
 
-            function handleLoginSuccess(username) {
-                currentUser = username;
-                console.log('User logged in:', username);
-                document.getElementById('loginUsername').value = '';
-                document.getElementById('loginPassword').value = '';
-                document.getElementById('newUsername').value = '';
-                document.getElementById('newPassword').value = '';
-                showPage('scan');
-            }
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const showCreateAccountBtn = document.getElementById('showCreateAccountBtn');
+        const backBtns = document.querySelectorAll('.back-btn');
+        
+        const createAccountEnterBtn = document.getElementById('createAccountEnterBtn');
+        const loginEnterBtn = document.getElementById('loginEnterBtn');
+        
+        const createAccountError = document.getElementById('createAccountError');
+        const loginError = document.getElementById('loginError');
 
-            // --- Event Listeners ---
+        const newUsernameInput = document.getElementById('newUsername');
+        const newPasswordInput = document.getElementById('newPassword');
+        const loginUsernameInput = document.getElementById('loginUsername');
+        const loginPasswordInput = document.getElementById('loginPassword');
 
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => showPage(button.dataset.page));
-            });
+        // --- Shopping List Element Selectors ---
+        const addItemBtn = document.getElementById('addItemBtn');
+        const newItemInput = document.getElementById('newItemInput');
+        const newItemCategory = document.getElementById('newItemCategory');
+        const shoppingListError = document.getElementById('shoppingListError');
+        const foodList = document.getElementById('food-list');
+        const cosmeticsList = document.getElementById('cosmetics-list');
+        const householdList = document.getElementById('household-list');
 
-            showLoginBtn.addEventListener('click', () => showHomeSection('login-section'));
-            showCreateAccountBtn.addEventListener('click', () => showHomeSection('create-account-section'));
-            backBtns.forEach(btn => btn.addEventListener('click', () => showHomeSection('welcome-section')));
 
-            // --- Form Submission Logic ---
+        // --- Functions ---
 
-            // Handle Enter key press for forms
-            [newUsernameInput, newPasswordInput].forEach(input => {
-                input.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter') {
-                        event.preventDefault(); // Prevent default form submission
-                        createAccountEnterBtn.click();
-                    }
+        // NEW: This function clears the lists and re-draws them based on the current user's data.
+        function renderShoppingList() {
+            if (!currentUser || !Users[currentUser]) return;
+
+            // Clear existing lists
+            foodList.innerHTML = '';
+            cosmeticsList.innerHTML = '';
+            householdList.innerHTML = '';
+
+            const userList = Users[currentUser].shoppingList;
+
+            userList.forEach(item => {
+                // Create the main label element for the item
+                const label = document.createElement('label');
+                label.className = 'shopping-item';
+                label.innerHTML = `
+                    <input type="checkbox" ${item.checked ? 'checked' : ''}>
+                    <span class="custom-checkbox"></span>
+                    <span class="item-text">${item.text}</span>
+                `;
+
+                // Add a delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '×';
+                deleteBtn.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-red-500 font-bold text-2xl hover:text-red-700';
+                label.appendChild(deleteBtn);
+
+                // Add event listener for checking/unchecking
+                label.querySelector('input').addEventListener('change', function() {
+                    item.checked = this.checked;
+                    console.log(Users[currentUser].shoppingList); // See updated data in console
+                    renderShoppingList();
                 });
-            });
 
-            [loginUsernameInput, loginPasswordInput].forEach(input => {
-                input.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter') {
-                        event.preventDefault(); // Prevent default form submission
-                        loginEnterBtn.click();
+                // Add event listener for deleting
+                deleteBtn.addEventListener('click', function(e) {
+                    e.preventDefault(); // prevent label from toggling checkbox
+                    // Find the item in the array and remove it
+                    const itemIndex = userList.findIndex(i => i.id === item.id);
+                    if (itemIndex > -1) {
+                        userList.splice(itemIndex, 1);
                     }
+                    renderShoppingList();
                 });
-            });
 
-            // Create Account Logic
-            createAccountEnterBtn.addEventListener('click', function() {
-                const username = document.getElementById('newUsername').value.trim();
-                const password = document.getElementById('newPassword').value.trim();
-                createAccountError.textContent = '';
-
-                if (!username || !password) {
-                    createAccountError.textContent = 'Username and password cannot be empty.';
-                    return;
-                }
-
-                if (Users.hasOwnProperty(username)) {
-                    createAccountError.textContent = 'This account is already in use.';
-                } else {
-                    Users[username] = password;
-                    console.log('New user created:', Users);
-                    handleLoginSuccess(username);
+                // Append the item to the correct category list
+                if (item.category === 'food') {
+                    foodList.appendChild(label);
+                } else if (item.category === 'cosmetics') {
+                    cosmeticsList.appendChild(label);
+                } else if (item.category === 'household') {
+                    householdList.appendChild(label);
                 }
             });
+        }
 
-            loginEnterBtn.addEventListener('click', function() {
-                const username = document.getElementById('loginUsername').value.trim();
-                const password = document.getElementById('loginPassword').value.trim();
-                loginError.textContent = '';
-                
-                if (Users.hasOwnProperty(username) && Users[username] === password) {
-                    handleLoginSuccess(username);
-                } else {
-                    loginError.textContent = 'This account does not exist.';
+
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.toggle('active', page.id === pageId));
+            
+            const isLoggedInPage = pageId !== 'home';
+            subheader.style.display = isLoggedInPage ? 'block' : 'none';
+            
+            if (isLoggedInPage && currentUser) {
+                userGreeting.textContent = `Hi, ${currentUser}`;
+                userGreeting.classList.remove('hidden');
+                signOutBtn.classList.remove('hidden');
+                // When showing a page, render the shopping list if it's the shopping page
+                if (pageId === 'shopping') {
+                    renderShoppingList();
                 }
-            });
+            } else {
+                userGreeting.classList.add('hidden');
+                signOutBtn.classList.add('hidden');
+                currentUser = null; // Clear user on sign out
+            }
+            
+            if (pageId === 'home') {
+                showHomeSection('welcome-section');
+            }
+        }
 
-            // --- Initial State ---
-            showPage('home');
+        function showHomeSection(sectionId) {
+            homeSections.forEach(section => section.classList.toggle('active', section.id === sectionId));
+            createAccountError.textContent = '';
+            loginError.textContent = '';
+        }
+
+        function handleLoginSuccess(username) {
+            currentUser = username;
+            console.log('User logged in:', username);
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            showPage('scan'); // Default to scan page after login
+        }
+
+        // --- Event Listeners ---
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => showPage(button.dataset.page));
         });
-    </script>
+
+        showLoginBtn.addEventListener('click', () => showHomeSection('login-section'));
+        showCreateAccountBtn.addEventListener('click', () => showHomeSection('create-account-section'));
+        backBtns.forEach(btn => btn.addEventListener('click', () => showHomeSection('welcome-section')));
+
+        // --- Form Submission Logic ---
+
+        [newUsernameInput, newPasswordInput].forEach(input => {
+            input.addEventListener('keydown', event => event.key === 'Enter' && createAccountEnterBtn.click());
+        });
+
+        [loginUsernameInput, loginPasswordInput].forEach(input => {
+            input.addEventListener('keydown', event => event.key === 'Enter' && loginEnterBtn.click());
+        });
+        
+        newItemInput.addEventListener('keydown', event => event.key === 'Enter' && addItemBtn.click());
+
+
+        createAccountEnterBtn.addEventListener('click', function() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            createAccountError.textContent = '';
+
+            if (!username || !password) {
+                createAccountError.textContent = 'Username and password cannot be empty.';
+                return;
+            }
+
+            if (Users.hasOwnProperty(username)) {
+                createAccountError.textContent = 'This account is already in use.';
+            } else {
+                // Create new user with a password and an empty shopping list
+                Users[username] = {
+                    password: password,
+                    shoppingList: []
+                };
+                console.log('New user created:', Users);
+                handleLoginSuccess(username);
+            }
+        });
+
+        loginEnterBtn.addEventListener('click', function() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            loginError.textContent = '';
+            
+            if (Users.hasOwnProperty(username) && Users[username].password === password) {
+                handleLoginSuccess(username);
+            } else {
+                loginError.textContent = 'This account does not exist.';
+            }
+        });
+
+        // NEW: Event listener for the "Add Item" button
+        addItemBtn.addEventListener('click', function() {
+            const itemText = newItemInput.value.trim();
+            const itemCategory = newItemCategory.value;
+            shoppingListError.textContent = '';
+
+            if (!itemText) {
+                shoppingListError.textContent = 'Please enter an item name.';
+                return;
+            }
+
+            if (currentUser && Users[currentUser]) {
+                const newItem = {
+                    id: Date.now(), // Use a timestamp for a unique ID
+                    text: itemText,
+                    category: itemCategory,
+                    checked: false
+                };
+                Users[currentUser].shoppingList.push(newItem);
+                newItemInput.value = ''; // Clear input field
+                renderShoppingList(); // Re-draw the list with the new item
+            }
+        });
+
+
+        // --- Initial State ---
+        showPage('home');
+    });
+</script>
 
 </body>
 </html>
+
