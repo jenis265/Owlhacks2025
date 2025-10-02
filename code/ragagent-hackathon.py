@@ -2,7 +2,7 @@ import os
 import requests
 from typing import List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
@@ -17,7 +17,11 @@ from langchain.retrievers import ContextualCompressionRetriever
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 from langchain.retrievers.document_compressors import CrossEncoderReranker
 
-
+from PIL import Image
+from pyzbar.pyzbar import decode
+import io
+import numpy as np
+from typing import Optional
 # -----------------------
 # 1. Gemini API
 # -----------------------
@@ -268,9 +272,88 @@ def ask(query: Query):
     answer = rag_answer(query.question)
     return {"answer": answer}
 
-
-# ... all other functions (like gemini_llm, rag_answer, fetch_off_data) ...
-
+@app.post("/check_barcode")
+async def check_barcode(
+    barcode: Optional[str] = Form(None),
+    image: Optional[UploadFile] = File(None)
+):
+    """
+    Check barcode either from:
+    1. Direct barcode string (manual entry)
+    2. Uploaded image (extract barcode from image)
+    """
+    detected_barcode = None
+    
+    # Option 1: Manual barcode entry
+    if barcode:
+        detected_barcode = barcode.strip()
+    
+    # Option 2: Extract barcode from uploaded image
+    elif image:
+        try:
+            contents = await image.read()
+            img = Image.open(io.BytesIO(contents)).convert("RGB")
+            img_np = np.array(img)
+            barcodes = decode(img_np)
+            
+            if barcodes:
+                detected_barcode = barcodes[0].data.decode("utf-8")
+        except Exception as e:
+            return {
+                "found": False,
+                "message": f"Error processing image: {str(e)}"
+            }
+    
+    if not detected_barcode:
+        return {
+            "found": False,
+            "message": "No barcode provided or detected."
+        }
+    
+    # Fetch product from OpenFoodFacts API
+    try:
+        url = f"https://world.openfoodfacts.org/api/v0/product/{detected_barcode}.json"
+        response = requests.get(url)
+        data = response.json()
+        
+        if data.get("status") == 1:
+            product = data.get("product", {})
+            
+            # Extract and clean ingredients
+            raw_ingredients = extract_ingredients(product.get("ingredients_text_en"))
+            cleaned_ingredients = clean_ingredients_text(raw_ingredients)
+            translated_ingredients = translate_to_en(cleaned_ingredients)
+            
+            # Get allergens
+            allergens_tags = product.get("allergens_tags", [])
+            allergens_list = [tag.replace("en:", "") for tag in allergens_tags]
+            
+            # If no allergens in the product data, predict using XGBoost
+            if not allergens_list and translated_ingredients and all([vectorizer, best_xgb_model, mlb]):
+                predicted_allergens = predict_allergens(translated_ingredients)
+                if predicted_allergens:
+                    allergens_list = predicted_allergens
+                    print(f"--> XGBoost prediction used for barcode {detected_barcode}")
+            
+            return {
+                "found": True,
+                "code": detected_barcode,
+                "product_name": product.get("product_name", "Unknown Product"),
+                "brands": product.get("brands", ""),
+                "ingredients": translated_ingredients or "No ingredients found",
+                "allergens": allergens_list,
+                "image_url": product.get("image_url", "")
+            }
+        else:
+            return {
+                "found": False,
+                "message": f"Product with barcode {detected_barcode} not found in database."
+            }
+    except Exception as e:
+        return {
+            "found": False,
+            "message": f"Error fetching product: {str(e)}"
+        }
 
 # -----------------------
 # 7. Run server
