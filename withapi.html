@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +10,50 @@
     <!-- Google Fonts: Inter & Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap"
+        rel="stylesheet">
     <!-- Twitter Widget Script -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- jsQR Library for barcode scanning -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <style>
         /* Custom styles for the main app */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFCDC; /* Cream background */
+            background-color: #FDFCDC;
+            /* Cream background */
         }
+
         .page-content {
-            display: none; /* Hide all pages by default */
+            display: none;
+            /* Hide all pages by default */
         }
+
         .page-content.active {
-            display: block; /* Show active page */
+            display: block;
+            /* Show active page */
         }
+
         /* Styles for the forms on the home page */
         .home-section {
             display: none;
         }
+
         .home-section.active {
             display: block;
         }
 
         /* --- STYLES FROM UPLOADED SHOPPING LIST CSS --- */
-        
+
         /* Category Headers (h2) in Ovals */
         #shopping .list-container h2 {
             font-family: 'Caveat', cursive;
             font-size: 2.2em;
-            color: #FFFFFF; /* White */
-            background-color: #00AFB9; /* Teal */
+            color: #FFFFFF;
+            /* White */
+            background-color: #00AFB9;
+            /* Teal */
             padding: 8px 25px;
             border-radius: 999px;
             display: inline-block;
@@ -62,12 +76,14 @@
 
         /* Add a subtle alternating background color */
         .shopping-item:nth-child(odd) {
-            background-color: rgba(254, 217, 183, 0.4); /* Transparent Peach */
+            background-color: rgba(254, 217, 183, 0.4);
+            /* Transparent Peach */
         }
 
         .shopping-item:hover {
             transform: scale(1.03);
-            background-color: #FED9B7; /* Peach */
+            background-color: #FED9B7;
+            /* Peach */
         }
 
         /* Hide the default browser checkbox */
@@ -87,8 +103,10 @@
             left: 10px;
             height: 25px;
             width: 25px;
-            background-color: #FFFFFF; /* White */
-            border: 2px solid #0081A7; /* Dark Teal */
+            background-color: #FFFFFF;
+            /* White */
+            border: 2px solid #0081A7;
+            /* Dark Teal */
             border-radius: 4px;
         }
 
@@ -100,20 +118,23 @@
         }
 
         /* Show the checkmark when the checkbox is checked */
-        .shopping-item input:checked ~ .custom-checkbox:after {
+        .shopping-item input:checked~.custom-checkbox:after {
             display: block;
         }
 
         /* When checked, update the checkbox and text styles */
-        .shopping-item input:checked ~ .custom-checkbox {
-            background-color: #F07167; /* Coral */
-            border-color: #F07167; /* Coral */
+        .shopping-item input:checked~.custom-checkbox {
+            background-color: #F07167;
+            /* Coral */
+            border-color: #F07167;
+            /* Coral */
         }
-        
+
         /* Add line-through style via a span to avoid affecting the whole label */
-        .shopping-item input:checked ~ .item-text {
+        .shopping-item input:checked~.item-text {
             text-decoration: line-through;
-            color: #a9a9a9; /* Dim the text when checked */
+            color: #a9a9a9;
+            /* Dim the text when checked */
         }
 
         /* Style the checkmark */
@@ -122,7 +143,8 @@
             top: 3px;
             width: 7px;
             height: 14px;
-            border: solid #FFFFFF; /* White checkmark */
+            border: solid #FFFFFF;
+            /* White checkmark */
             border-width: 0 4px 4px 0;
             transform: rotate(45deg);
         }
@@ -134,16 +156,19 @@
             margin-top: 1.5rem;
             color: #0081A7;
         }
+
         #recipeResults ul {
             list-style-type: disc;
             margin-left: 2rem;
             margin-top: 0.5rem;
         }
-         #recipeResults p {
+
+        #recipeResults p {
             margin-top: 0.5rem;
         }
     </style>
 </head>
+
 <body class="text-[#000000]">
 
     <!-- Header Section -->
@@ -151,7 +176,9 @@
         <!-- Main Header -->
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="w-1/3 text-left">
-                <button id="signOutBtn" data-page="home" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2 hidden">Sign Out</button>
+                <button id="signOutBtn" data-page="home"
+                    class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2 hidden">Sign
+                    Out</button>
             </div>
             <div class="w-1/3 text-center">
                 <h1 class="text-3xl font-bold">Action-Reaction</h1>
@@ -164,12 +191,19 @@
         <nav id="subheader" class="bg-[#00AFB9]">
             <div class="container mx-auto flex justify-center items-center px-6 py-2">
                 <div class="flex justify-center items-center gap-4 sm:gap-8">
-                    <button data-page="scan" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Home</button>
-                    <button data-page="shopping" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Shopping List</button>
-                    <button data-page="community" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Community</button>
-                    <button data-page="allergens" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Allergens</button>
-                    <button data-page="recipes" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Recipes</button>
-                    <button data-page="chatbot" class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Chatbot</button>
+                    <button data-page="scan"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Home</button>
+                    <button data-page="shopping"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Shopping
+                        List</button>
+                    <button data-page="community"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Community</button>
+                    <button data-page="allergens"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Allergens</button>
+                    <button data-page="recipes"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Recipes</button>
+                    <button data-page="chatbot"
+                        class="nav-button font-semibold hover:text-[#FED9B7] transition-colors duration-300 py-2">Chatbot</button>
                 </div>
             </div>
         </nav>
@@ -177,20 +211,23 @@
 
     <!-- Main Content: This container will hold all the 'pages' -->
     <main class="container mx-auto p-4 sm:p-8">
-        
+
         <!-- Home Page Content -->
         <div id="home" class="page-content active">
-            
+
             <!-- Initial Welcome Section -->
             <div id="welcome-section" class="home-section active text-center mt-12 sm:mt-16 relative">
-                 <div class="relative z-10">
+                <div class="relative z-10">
                     <h2 class="text-4xl font-bold text-gray-900 mb-2">Welcome to Action-Reaction</h2>
                     <p class="text-lg text-gray-600 mb-8">Your Allergy-Safe Product Scanner.</p>
                     <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                        <button id="showLoginBtn" class="w-full sm:w-auto bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105">Login</button>
-                        <button id="showCreateAccountBtn" class="w-full sm:w-auto bg-[#FED9B7] hover:bg-opacity-80 text-[#000000] font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105">Create account</button>
+                        <button id="showLoginBtn"
+                            class="w-full sm:w-auto bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105">Login</button>
+                        <button id="showCreateAccountBtn"
+                            class="w-full sm:w-auto bg-[#FED9B7] hover:bg-opacity-80 text-[#000000] font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105">Create
+                            account</button>
                     </div>
-                 </div>
+                </div>
             </div>
 
             <!-- Create Account Section -->
@@ -199,12 +236,15 @@
                 <div class="bg-white p-8 rounded-lg shadow-xl">
                     <h2 class="text-2xl font-bold text-center mb-6">Create Your Account</h2>
                     <div class="space-y-4">
-                        <input id="newUsername" type="text" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                        <input id="newPassword" type="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <input id="newUsername" type="text" placeholder="Username"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <input id="newPassword" type="password" placeholder="Password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
                     </div>
                     <div class="flex justify-between items-center mt-6">
                         <button class="back-btn text-gray-600 hover:text-gray-900 font-semibold">&larr; Back</button>
-                        <button id="createAccountEnterBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Enter</button>
+                        <button id="createAccountEnterBtn"
+                            class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Enter</button>
                     </div>
                 </div>
             </div>
@@ -215,12 +255,15 @@
                 <div class="bg-white p-8 rounded-lg shadow-xl">
                     <h2 class="text-2xl font-bold text-center mb-6">Login to Your Account</h2>
                     <div class="space-y-4">
-                        <input id="loginUsername" type="text" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                        <input id="loginPassword" type="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <input id="loginUsername" type="text" placeholder="Username"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <input id="loginPassword" type="password" placeholder="Password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
                     </div>
                     <div class="flex justify-between items-center mt-6">
                         <button class="back-btn text-gray-600 hover:text-gray-900 font-semibold">&larr; Back</button>
-                        <button id="loginEnterBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Enter</button>
+                        <button id="loginEnterBtn"
+                            class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Enter</button>
                     </div>
                 </div>
             </div>
@@ -229,80 +272,131 @@
 
         <!-- Scan Food Page Content (Home page after login) -->
         <div id="scan" class="page-content">
-            <div class="text-center mt-16">
-                <h2 class="text-3xl font-bold">Scan a Product</h2>
-                <p class="mt-2 mb-6 text-gray-700">Upload a barcode image or enter the number below.</p>
-                
-                <img 
-                    src="images/image.png" 
-                    alt="Illustration of a phone scanning a barcode"
-                    class="mx-auto mb-8 rounded-lg w-1/2"> 
+            <div class="text-center mt-8">
+                <h2 class="text-3xl font-bold mb-2">Scan a Product</h2>
+                <p class="text-gray-700 mb-6">Use camera, upload an image, or enter barcode manually</p>
 
-                <!-- START: New elements for file upload and barcode input -->
-                <div class="max-w-md mx-auto">
-                    <!-- Styled File Upload Button -->
-                    <label for="imageUpload" class="w-full inline-block bg-[#FED9B7] hover:bg-opacity-80 text-[#000000] font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
-                        Upload Image
-                    </label>
-                    <input type="file" id="imageUpload" class="hidden" accept="image/*">
-                    
-                    <!-- "OR" Separator -->
+                <div class="max-w-3xl mx-auto">
+
+                    <!-- Option 1: Camera Scanner -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-bold mb-4">📷 Camera Scanner</h3>
+                        <video id="camera" autoplay playsinline width="100%" style="max-width: 400px; display: none;"
+                            class="mx-auto mb-4 rounded-lg"></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button id="startCameraBtn"
+                                class="bg-[#00AFB9] hover:bg-opacity-80 text-white font-semibold py-3 px-6 rounded-lg shadow-md">
+                                Start Camera
+                            </button>
+                            <button id="captureBarcodeBtn"
+                                class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-3 px-6 rounded-lg shadow-md"
+                                style="display: none;">
+                                Capture & Scan
+                            </button>
+                            <button id="stopCameraBtn"
+                                class="bg-gray-500 hover:bg-opacity-80 text-white font-semibold py-3 px-6 rounded-lg shadow-md"
+                                style="display: none;">
+                                Stop Camera
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- OR Separator -->
                     <div class="my-4 flex items-center">
                         <hr class="flex-grow border-t border-gray-300">
                         <span class="px-2 text-gray-500 font-semibold">OR</span>
                         <hr class="flex-grow border-t border-gray-300">
                     </div>
 
-                    <!-- Barcode Text Input -->
-                    <div>
-                        <input id="barcodeInput" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter barcode number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9] text-center">
+                    <!-- Option 2: Upload Image -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-bold mb-4">🖼️ Upload Barcode Image</h3>
+                        <label for="imageUpload"
+                            class="w-full inline-block bg-[#FED9B7] hover:bg-opacity-80 text-[#000000] font-semibold py-3 px-8 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+                            Choose Image File
+                        </label>
+                        <input type="file" id="imageUpload" class="hidden" accept="image/*">
+                        <p id="uploadFileName" class="mt-3 text-sm text-gray-600"></p>
+                    </div>
+
+                    <!-- OR Separator -->
+                    <div class="my-4 flex items-center">
+                        <hr class="flex-grow border-t border-gray-300">
+                        <span class="px-2 text-gray-500 font-semibold">OR</span>
+                        <hr class="flex-grow border-t border-gray-300">
+                    </div>
+
+                    <!-- Option 3: Manual Entry -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-bold mb-4">⌨️ Enter Barcode Manually</h3>
+                        <div class="flex gap-2">
+                            <input id="barcodeInput" type="text" inputmode="numeric"
+                                placeholder="Enter barcode number (e.g., 3017620422003)"
+                                class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                            <button id="checkBarcodeBtn"
+                                class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-3 px-6 rounded-lg shadow-md">
+                                Check
+                            </button>
+                        </div>
                         <p id="barcodeError" class="text-red-500 text-sm mt-2 font-semibold hidden">
                             Please enter a valid barcode number.
                         </p>
                     </div>
+
+                    <!-- Results Display -->
+                    <div id="scanResults" class="mt-8" style="display: none;">
+                        <!-- Results will be dynamically inserted here -->
+                    </div>
                 </div>
-                <!-- END: New elements -->
             </div>
         </div>
 
         <!-- Shopping List Page Content -->
         <div id="shopping" class="page-content">
-        <div class="max-w-2xl mx-auto">
-        <div class="bg-white p-4 rounded-lg shadow-md mb-8">
-            <h3 class="text-xl font-bold mb-4 text-center">Add To Your Shopping List</h3>
-            <div class="flex flex-col sm:flex-row gap-2">
-                <input id="newItemInput" type="text" placeholder="e.g., Avocados" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                <select id="newItemCategory" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                    <option value="food">Food & Groceries</option>
-                    <option value="cosmetics">Cosmetics & Skincare</option>
-                    <option value="household">Household</option>
-                </select>
-                <button id="addItemBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Add</button>
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white p-4 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-center">Add To Your Shopping List</h3>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input id="newItemInput" type="text" placeholder="e.g., Avocados"
+                            class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <select id="newItemCategory"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                            <option value="food">Food & Groceries</option>
+                            <option value="cosmetics">Cosmetics & Skincare</option>
+                            <option value="household">Household</option>
+                        </select>
+                        <button id="addItemBtn"
+                            class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Add</button>
+                    </div>
+                    <p id="shoppingListError" class="text-center text-red-500 font-semibold mt-2"></p>
+                </div>
+
+                <div class="list-container">
+                    <h2>Food & Groceries</h2>
+                    <div id="food-list" class="mb-6"></div>
+
+                    <h2>Cosmetics & Skincare</h2>
+                    <div id="cosmetics-list" class="mb-6"></div>
+
+                    <h2>Household</h2>
+                    <div id="household-list" class="mb-6"></div>
+                </div>
             </div>
-            <p id="shoppingListError" class="text-center text-red-500 font-semibold mt-2"></p>
         </div>
-
-        <div class="list-container">
-            <h2>Food & Groceries</h2>
-            <div id="food-list" class="mb-6"></div>
-
-            <h2>Cosmetics & Skincare</h2>
-            <div id="cosmetics-list" class="mb-6"></div>
-            
-            <h2>Household</h2>
-            <div id="household-list" class="mb-6"></div>
-        </div>
-         </div>
-    </div>
         <!-- Community Page Content -->
         <div id="community" class="page-content">
-             <div class="max-w-lg mx-auto mt-8 text-center">
+            <div class="max-w-lg mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold mb-4">Join the Conversation!</h2>
-                <p class="mb-6 text-gray-700">See what the community is saying about living with allergies and share your own experiences.</p>
-                <a href="https://twitter.com/intent/tweet?button_hashtag=allergy&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #allergy</a>
-                
+                <p class="mb-6 text-gray-700">See what the community is saying about living with allergies and share
+                    your own experiences.</p>
+                <a href="https://twitter.com/intent/tweet?button_hashtag=allergy&ref_src=twsrc%5Etfw"
+                    class="twitter-hashtag-button" data-show-count="false">Tweet #allergy</a>
+
                 <div class="mt-8">
-                    <a class="twitter-timeline" data-height="800" data-tweet-limit="20" href="https://twitter.com/hashtag/allergy?src=twsrc%5Etfw">Tweets about #allergy</a> 
+                    <a class="twitter-timeline" data-height="800" data-tweet-limit="20"
+                        href="https://twitter.com/hashtag/allergy?src=twsrc%5Etfw">Tweets about #allergy</a>
                 </div>
             </div>
         </div>
@@ -313,10 +407,12 @@
                 <h2 class="text-3xl font-bold text-center mb-6">Manage Your Allergens</h2>
                 <div class="bg-white p-4 rounded-lg shadow-md mb-6">
                     <div class="flex gap-2">
-                        <input id="newAllergenInput" type="text" placeholder="e.g., Peanuts" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                        <button id="addAllergenBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Add</button>
+                        <input id="newAllergenInput" type="text" placeholder="e.g., Peanuts"
+                            class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <button id="addAllergenBtn"
+                            class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Add</button>
                     </div>
-                     <p id="allergenError" class="text-center text-red-500 font-semibold mt-2"></p>
+                    <p id="allergenError" class="text-center text-red-500 font-semibold mt-2"></p>
                 </div>
                 <div id="allergenList" class="space-y-2">
                     <!-- Allergens will be dynamically inserted here -->
@@ -328,8 +424,11 @@
         <div id="recipes" class="page-content">
             <div class="max-w-2xl mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold">Get Custom Recipe Ideas</h2>
-                <p class="mt-4 text-gray-700">Generate recipes based on your shopping list and your specified allergens.</p>
-                <button id="generateRecipesBtn" class="mt-6 bg-[#F07167] hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Generate Recipes</button>
+                <p class="mt-4 text-gray-700">Generate recipes based on your shopping list and your specified allergens.
+                </p>
+                <button id="generateRecipesBtn"
+                    class="mt-6 bg-[#F07167] hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Generate
+                    Recipes</button>
                 <div id="recipeResults" class="mt-8 text-left bg-white p-6 rounded-lg shadow-md min-h-[100px]">
                     Your recipe ideas will appear here...
                 </div>
@@ -340,14 +439,18 @@
         <div id="chatbot" class="page-content">
             <div class="max-w-2xl mx-auto mt-8 text-center">
                 <h2 class="text-3xl font-bold">Allergy-Safe Chatbot</h2>
-                <p class="mt-4 mb-6 text-gray-700">Ask me anything about food allergies, ingredients, and safe eating!</p>
+                <p class="mt-4 mb-6 text-gray-700">Ask me anything about food allergies, ingredients, and safe eating!
+                </p>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <div class="flex gap-2">
-                        <input id="user_input" type="text" placeholder="Ask a question..." class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
-                        <button id="askBotBtn" class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Ask</button>
+                        <input id="user_input" type="text" placeholder="Ask a question..."
+                            class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AFB9]">
+                        <button id="askBotBtn"
+                            class="bg-[#F07167] hover:bg-opacity-80 text-white font-semibold py-2 px-6 rounded-lg shadow-md">Ask</button>
                     </div>
-                    <div id="bot_output" class="mt-4 text-left min-h-[50px] p-4 bg-gray-50 rounded-lg whitespace-pre-wrap">
+                    <div id="bot_output"
+                        class="mt-4 text-left min-h-[50px] p-4 bg-gray-50 rounded-lg whitespace-pre-wrap">
                         The bot's answer will appear here...
                     </div>
                 </div>
@@ -357,336 +460,516 @@
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- State and Data ---
-        const Users = {
-            "testuser": {
-                password: "password123",
-                shoppingList: [
-                    { id: 1, text: 'Avocados', category: 'food', checked: true },
-                    { id: 2, text: 'Oat Milk', category: 'food', checked: false },
-                    { id: 3, text: 'Chicken Breast', category: 'food', checked: false },
-                    { id: 4, text: 'Spinach', category: 'food', checked: false },
-                    { id: 5, text: 'Sunscreen', category: 'cosmetics', checked: false },
-                ],
-                allergens: ['Peanuts', 'Shellfish']
-            }
-        }; 
-        let currentUser = null; // Track the logged-in user
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- State and Data ---
+            const Users = {
+                "testuser": {
+                    password: "password123",
+                    shoppingList: [
+                        { id: 1, text: 'Avocados', category: 'food', checked: true },
+                        { id: 2, text: 'Oat Milk', category: 'food', checked: false },
+                        { id: 3, text: 'Chicken Breast', category: 'food', checked: false },
+                        { id: 4, text: 'Spinach', category: 'food', checked: false },
+                        { id: 5, text: 'Sunscreen', category: 'cosmetics', checked: false },
+                    ],
+                    allergens: ['Peanuts', 'Shellfish']
+                }
+            };
+            let currentUser = null; // Track the logged-in user
 
-        // --- Element Selectors ---
-        const navButtons = document.querySelectorAll('.nav-button');
-        const pages = document.querySelectorAll('.page-content');
-        const subheader = document.getElementById('subheader');
-        const homeSections = document.querySelectorAll('.home-section');
-        const userGreeting = document.getElementById('userGreeting');
-        const signOutBtn = document.getElementById('signOutBtn');
+            // --- Element Selectors ---
+            const navButtons = document.querySelectorAll('.nav-button');
+            const pages = document.querySelectorAll('.page-content');
+            const subheader = document.getElementById('subheader');
+            const homeSections = document.querySelectorAll('.home-section');
+            const userGreeting = document.getElementById('userGreeting');
+            const signOutBtn = document.getElementById('signOutBtn');
 
-        const showLoginBtn = document.getElementById('showLoginBtn');
-        const showCreateAccountBtn = document.getElementById('showCreateAccountBtn');
-        const backBtns = document.querySelectorAll('.back-btn');
-        
-        const createAccountEnterBtn = document.getElementById('createAccountEnterBtn');
-        const loginEnterBtn = document.getElementById('loginEnterBtn');
-        
-        const createAccountError = document.getElementById('createAccountError');
-        const loginError = document.getElementById('loginError');
+            const showLoginBtn = document.getElementById('showLoginBtn');
+            const showCreateAccountBtn = document.getElementById('showCreateAccountBtn');
+            const backBtns = document.querySelectorAll('.back-btn');
 
-        const newUsernameInput = document.getElementById('newUsername');
-        const newPasswordInput = document.getElementById('newPassword');
-        const loginUsernameInput = document.getElementById('loginUsername');
-        const loginPasswordInput = document.getElementById('loginPassword');
+            const createAccountEnterBtn = document.getElementById('createAccountEnterBtn');
+            const loginEnterBtn = document.getElementById('loginEnterBtn');
 
-        // Shopping List Selectors
-        const addItemBtn = document.getElementById('addItemBtn');
-        const newItemInput = document.getElementById('newItemInput');
-        const newItemCategory = document.getElementById('newItemCategory');
-        const shoppingListError = document.getElementById('shoppingListError');
-        const foodList = document.getElementById('food-list');
-        const cosmeticsList = document.getElementById('cosmetics-list');
-        const householdList = document.getElementById('household-list');
+            const createAccountError = document.getElementById('createAccountError');
+            const loginError = document.getElementById('loginError');
 
-        // Allergen Selectors
-        const addAllergenBtn = document.getElementById('addAllergenBtn');
-        const newAllergenInput = document.getElementById('newAllergenInput');
-        const allergenList = document.getElementById('allergenList');
-        const allergenError = document.getElementById('allergenError');
+            const newUsernameInput = document.getElementById('newUsername');
+            const newPasswordInput = document.getElementById('newPassword');
+            const loginUsernameInput = document.getElementById('loginUsername');
+            const loginPasswordInput = document.getElementById('loginPassword');
 
-        // Recipe Selectors
-        const generateRecipesBtn = document.getElementById('generateRecipesBtn');
-        const recipeResults = document.getElementById('recipeResults');
-        
-        // Chatbot Selectors
-        const askBotBtn = document.getElementById('askBotBtn');
-        const userInput = document.getElementById('user_input');
-        const botOutput = document.getElementById('bot_output');
+            // Shopping List Selectors
+            const addItemBtn = document.getElementById('addItemBtn');
+            const newItemInput = document.getElementById('newItemInput');
+            const newItemCategory = document.getElementById('newItemCategory');
+            const shoppingListError = document.getElementById('shoppingListError');
+            const foodList = document.getElementById('food-list');
+            const cosmeticsList = document.getElementById('cosmetics-list');
+            const householdList = document.getElementById('household-list');
 
-        // START: Barcode validation selectors
-        const barcodeInput = document.getElementById('barcodeInput');
-        const barcodeError = document.getElementById('barcodeError');
-        // END: Barcode validation selectors
+            // Allergen Selectors
+            const addAllergenBtn = document.getElementById('addAllergenBtn');
+            const newAllergenInput = document.getElementById('newAllergenInput');
+            const allergenList = document.getElementById('allergenList');
+            const allergenError = document.getElementById('allergenError');
+
+            // Recipe Selectors
+            const generateRecipesBtn = document.getElementById('generateRecipesBtn');
+            const recipeResults = document.getElementById('recipeResults');
+
+            // Chatbot Selectors
+            const askBotBtn = document.getElementById('askBotBtn');
+            const userInput = document.getElementById('user_input');
+            const botOutput = document.getElementById('bot_output');
+
+            // START: Barcode validation selectors
+            const startCameraBtn = document.getElementById('startCameraBtn');
+            const captureBarcodeBtn = document.getElementById('captureBarcodeBtn');
+            const stopCameraBtn = document.getElementById('stopCameraBtn');
+            const camera = document.getElementById('camera');
+            const canvas = document.getElementById('canvas');
+            const imageUpload = document.getElementById('imageUpload');
+            const uploadFileName = document.getElementById('uploadFileName');
+            const barcodeInput = document.getElementById('barcodeInput');
+            const checkBarcodeBtn = document.getElementById('checkBarcodeBtn');
+            const barcodeError = document.getElementById('barcodeError');
+            const scanResults = document.getElementById('scanResults');
+
+            let cameraStream = null;
+            // END: Barcode validation selectors
 
 
-        // --- Functions ---
+            // --- Functions ---
 
-        function renderShoppingList() {
-            if (!currentUser || !Users[currentUser]) return;
-            foodList.innerHTML = '';
-            cosmeticsList.innerHTML = '';
-            householdList.innerHTML = '';
-            const userList = Users[currentUser].shoppingList;
+            function renderShoppingList() {
+                if (!currentUser || !Users[currentUser]) return;
+                foodList.innerHTML = '';
+                cosmeticsList.innerHTML = '';
+                householdList.innerHTML = '';
+                const userList = Users[currentUser].shoppingList;
 
-            userList.forEach(item => {
-                const label = document.createElement('label');
-                label.className = 'shopping-item';
-                label.innerHTML = `
+                userList.forEach(item => {
+                    const label = document.createElement('label');
+                    label.className = 'shopping-item';
+                    label.innerHTML = `
                     <input type="checkbox" ${item.checked ? 'checked' : ''}>
                     <span class="custom-checkbox"></span>
                     <span class="item-text">${item.text}</span>
                 `;
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = '×';
-                deleteBtn.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-red-500 font-bold text-2xl hover:text-red-700';
-                label.appendChild(deleteBtn);
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '×';
+                    deleteBtn.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-red-500 font-bold text-2xl hover:text-red-700';
+                    label.appendChild(deleteBtn);
 
-                label.querySelector('input').addEventListener('change', function() {
-                    item.checked = this.checked;
-                    renderShoppingList();
+                    label.querySelector('input').addEventListener('change', function () {
+                        item.checked = this.checked;
+                        renderShoppingList();
+                    });
+
+                    deleteBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const itemIndex = userList.findIndex(i => i.id === item.id);
+                        if (itemIndex > -1) userList.splice(itemIndex, 1);
+                        renderShoppingList();
+                    });
+                    if (item.category === 'food') foodList.appendChild(label);
+                    else if (item.category === 'cosmetics') cosmeticsList.appendChild(label);
+                    else if (item.category === 'household') householdList.appendChild(label);
                 });
-
-                deleteBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const itemIndex = userList.findIndex(i => i.id === item.id);
-                    if (itemIndex > -1) userList.splice(itemIndex, 1);
-                    renderShoppingList();
-                });
-                if (item.category === 'food') foodList.appendChild(label);
-                else if (item.category === 'cosmetics') cosmeticsList.appendChild(label);
-                else if (item.category === 'household') householdList.appendChild(label);
-            });
-        }
-
-        function renderAllergens() {
-            if (!currentUser || !Users[currentUser]) return;
-            allergenList.innerHTML = '';
-            const userAllergens = Users[currentUser].allergens;
-            userAllergens.forEach(allergen => {
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center bg-gray-100 p-2 rounded-lg';
-                div.innerHTML = `<span>${allergen}</span>`;
-                const removeBtn = document.createElement('button');
-                removeBtn.textContent = 'Remove';
-                removeBtn.className = 'text-red-500 hover:text-red-700 text-sm font-semibold';
-                removeBtn.onclick = () => {
-                    const index = userAllergens.indexOf(allergen);
-                    if (index > -1) userAllergens.splice(index, 1);
-                    renderAllergens();
-                };
-                div.appendChild(removeBtn);
-                allergenList.appendChild(div);
-            });
-        }
-
-        function showPage(pageId) {
-            pages.forEach(page => page.classList.toggle('active', page.id === pageId));
-            const isLoggedInPage = pageId !== 'home';
-            subheader.style.display = isLoggedInPage ? 'block' : 'none';
-            
-            if (isLoggedInPage && currentUser) {
-                userGreeting.textContent = `Hi, ${currentUser}`;
-                userGreeting.classList.remove('hidden');
-                signOutBtn.classList.remove('hidden');
-                if (pageId === 'shopping') renderShoppingList();
-                if (pageId === 'allergens') renderAllergens();
-            } else {
-                userGreeting.classList.add('hidden');
-                signOutBtn.classList.add('hidden');
-                currentUser = null;
             }
-            if (pageId === 'home') showHomeSection('welcome-section');
-        }
 
-        function showHomeSection(sectionId) {
-            homeSections.forEach(section => section.classList.toggle('active', section.id === sectionId));
-            createAccountError.textContent = '';
-            loginError.textContent = '';
-        }
-
-        function handleLoginSuccess(username) {
-            currentUser = username;
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('newUsername').value = '';
-            document.getElementById('newPassword').value = '';
-            showPage('scan');
-        }
-
-        async function askBot() {
-            const query = userInput.value;
-            if (!query.trim()) return; 
-
-            botOutput.innerText = 'Thinking...';
-            try {
-                const response = await fetch("http://localhost:7860/ask", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({question: query})
+            function renderAllergens() {
+                if (!currentUser || !Users[currentUser]) return;
+                allergenList.innerHTML = '';
+                const userAllergens = Users[currentUser].allergens;
+                userAllergens.forEach(allergen => {
+                    const div = document.createElement('div');
+                    div.className = 'flex justify-between items-center bg-gray-100 p-2 rounded-lg';
+                    div.innerHTML = `<span>${allergen}</span>`;
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.className = 'text-red-500 hover:text-red-700 text-sm font-semibold';
+                    removeBtn.onclick = () => {
+                        const index = userAllergens.indexOf(allergen);
+                        if (index > -1) userAllergens.splice(index, 1);
+                        renderAllergens();
+                    };
+                    div.appendChild(removeBtn);
+                    allergenList.appendChild(div);
                 });
+            }
 
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
+            function showPage(pageId) {
+                pages.forEach(page => page.classList.toggle('active', page.id === pageId));
+                const isLoggedInPage = pageId !== 'home';
+                subheader.style.display = isLoggedInPage ? 'block' : 'none';
+
+                if (isLoggedInPage && currentUser) {
+                    userGreeting.textContent = `Hi, ${currentUser}`;
+                    userGreeting.classList.remove('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    if (pageId === 'shopping') renderShoppingList();
+                    if (pageId === 'allergens') renderAllergens();
+                } else {
+                    userGreeting.classList.add('hidden');
+                    signOutBtn.classList.add('hidden');
+                    currentUser = null;
                 }
-
-                const data = await response.json();
-                botOutput.innerText = data.answer;
-            } catch (error) {
-                console.error("Chatbot fetch error:", error);
-                botOutput.innerText = "Sorry, I couldn't connect to the chatbot server. Please make sure it's running locally on port 7860.";
+                if (pageId === 'home') showHomeSection('welcome-section');
             }
-        }
 
-
-        // --- Event Listeners ---
-        navButtons.forEach(button => button.addEventListener('click', () => showPage(button.dataset.page)));
-        showLoginBtn.addEventListener('click', () => showHomeSection('login-section'));
-        showCreateAccountBtn.addEventListener('click', () => showHomeSection('create-account-section'));
-        backBtns.forEach(btn => btn.addEventListener('click', () => showHomeSection('welcome-section')));
-
-        // Form Submission
-        [newUsernameInput, newPasswordInput].forEach(input => input.addEventListener('keydown', e => e.key === 'Enter' && createAccountEnterBtn.click()));
-        [loginUsernameInput, loginPasswordInput].forEach(input => input.addEventListener('keydown', e => e.key === 'Enter' && loginEnterBtn.click()));
-        newItemInput.addEventListener('keydown', e => e.key === 'Enter' && addItemBtn.click());
-        newAllergenInput.addEventListener('keydown', e => e.key === 'Enter' && addAllergenBtn.click());
-        
-        askBotBtn.addEventListener('click', askBot);
-        userInput.addEventListener('keydown', e => e.key === 'Enter' && askBot());
-
-        // START: Barcode validation listener
-        barcodeInput.addEventListener('input', () => {
-            const value = barcodeInput.value;
-            // This regex checks if the string contains only digits (0-9)
-            if (value && !/^\d+$/.test(value)) {
-                barcodeError.classList.remove('hidden'); // Show error
-            } else {
-                barcodeError.classList.add('hidden'); // Hide error
+            function showHomeSection(sectionId) {
+                homeSections.forEach(section => section.classList.toggle('active', section.id === sectionId));
+                createAccountError.textContent = '';
+                loginError.textContent = '';
             }
-        });
-        // END: Barcode validation listener
 
-        createAccountEnterBtn.addEventListener('click', () => {
-            const username = newUsernameInput.value.trim();
-            const password = newPasswordInput.value.trim();
-            createAccountError.textContent = '';
-            if (!username || !password) {
-                createAccountError.textContent = 'Username and password cannot be empty.';
-                return;
+            function handleLoginSuccess(username) {
+                currentUser = username;
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('newUsername').value = '';
+                document.getElementById('newPassword').value = '';
+                showPage('scan');
             }
-            if (Users.hasOwnProperty(username)) {
-                createAccountError.textContent = 'This account is already in use.';
-            } else {
-                Users[username] = { password: password, shoppingList: [], allergens: [] };
-                handleLoginSuccess(username);
-            }
-        });
 
-        loginEnterBtn.addEventListener('click', () => {
-            const username = loginUsernameInput.value.trim();
-            const password = loginPasswordInput.value.trim();
-            loginError.textContent = '';
-            if (Users.hasOwnProperty(username) && Users[username].password === password) {
-                handleLoginSuccess(username);
-            } else {
-                loginError.textContent = 'Invalid username or password.';
-            }
-        });
+            async function askBot() {
+                const query = userInput.value;
+                if (!query.trim()) return;
 
-        addItemBtn.addEventListener('click', () => {
-            const itemText = newItemInput.value.trim();
-            shoppingListError.textContent = '';
-            if (!itemText) {
-                shoppingListError.textContent = 'Please enter an item name.';
-                return;
-            }
-            if (currentUser && Users[currentUser]) {
-                const newItem = { id: Date.now(), text: itemText, category: newItemCategory.value, checked: false };
-                Users[currentUser].shoppingList.push(newItem);
-                newItemInput.value = '';
-                renderShoppingList();
-            }
-        });
+                botOutput.innerText = 'Thinking...';
+                try {
+                    const response = await fetch("http://localhost:7860/ask", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ question: query })
+                    });
 
-        addAllergenBtn.addEventListener('click', () => {
-            const allergenText = newAllergenInput.value.trim();
-            allergenError.textContent = '';
-            if (!allergenText) {
-                allergenError.textContent = 'Please enter an allergen.';
-                return;
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    botOutput.innerText = data.answer;
+                } catch (error) {
+                    console.error("Chatbot fetch error:", error);
+                    botOutput.innerText = "Sorry, I couldn't connect to the chatbot server. Please make sure it's running locally on port 7860.";
+                }
             }
-            if (currentUser && Users[currentUser]) {
-                if (Users[currentUser].allergens.includes(allergenText)) {
-                    allergenError.textContent = 'Allergen already listed.';
+            async function checkBarcodeAPI(barcodeValue = null, imageFile = null) {
+                scanResults.style.display = 'block';
+                scanResults.innerHTML = '<p class="text-center text-gray-600">🔍 Checking product...</p>';
+
+                try {
+                    const formData = new FormData();
+
+                    if (barcodeValue) {
+                        formData.append('barcode', barcodeValue);
+                    } else if (imageFile) {
+                        formData.append('image', imageFile);
+                    }
+
+                    const response = await fetch("http://localhost:7860/check_barcode", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    displayBarcodeResult(result);
+
+                } catch (error) {
+                    console.error("Barcode check error:", error);
+                    scanResults.innerHTML = `
+                        <div class="bg-red-50 border border-red-300 p-6 rounded-lg">
+                            <p class="text-red-700 font-semibold">❌ Error: ${error.message}</p>
+                            <p class="text-sm text-red-600 mt-2">Make sure your backend is running on port 7860.</p>
+                        </div>
+        `           ;
+                }
+            }
+
+            function displayBarcodeResult(result) {
+                if (result.found) {
+                    const allergenWarning = currentUser && Users[currentUser] ?
+                        result.allergens.some(a => Users[currentUser].allergens.some(ua =>
+                            a.toLowerCase().includes(ua.toLowerCase()) || ua.toLowerCase().includes(a.toLowerCase())
+                        )) : false;
+
+                    scanResults.innerHTML = `
+                        <div class="bg-white p-6 rounded-lg shadow-xl border-2 ${allergenWarning ? 'border-red-500' : 'border-green-500'}">
+                            ${allergenWarning ? '<div class="bg-red-100 border-l-4 border-red-500 p-4 mb-4"><p class="text-red-700 font-bold">⚠️ WARNING: Contains allergens you\'re sensitive to!</p></div>' : ''}
+                
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">${result.product_name}</h3>
+                
+                            ${result.image_url ? `<img src="${result.image_url}" alt="Product" class="w-48 mx-auto mb-4 rounded-lg shadow-md">` : ''}
+                
+                            <div class="text-left space-y-3">
+                                <p><strong class="text-[#0081A7]">Barcode:</strong> ${result.code}</p>
+                                ${result.brands ? `<p><strong class="text-[#0081A7]">Brand:</strong> ${result.brands}</p>` : ''}
+                    
+                                <div>
+                                    <p class="font-bold text-[#0081A7] mb-2">Ingredients:</p>
+                                    <p class="text-sm bg-gray-50 p-3 rounded">${result.ingredients}</p>
+                                </div>
+                    
+                                <div>
+                                    <p class="font-bold text-[#0081A7] mb-2">Allergens:</p>
+                                    ${result.allergens.length > 0 ?
+                            `<div class="flex flex-wrap gap-2">
+                                            ${result.allergens.map(a => `<span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">${a}</span>`).join('')}
+                                        </div>` :
+                            '<p class="text-green-600 font-semibold">✅ No allergens detected</p>'
+                        }
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    scanResults.innerHTML = `
+                        <div class="bg-yellow-50 border border-yellow-300 p-6 rounded-lg">
+                            <p class="text-yellow-800 font-semibold">❌ ${result.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            async function startCamera() {
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: "environment" }
+                    });
+                    camera.srcObject = cameraStream;
+                    camera.style.display = 'block';
+                    startCameraBtn.style.display = 'none';
+                    captureBarcodeBtn.style.display = 'inline-block';
+                    stopCameraBtn.style.display = 'inline-block';
+                } catch (err) {
+                    console.error("Camera access error:", err);
+                    alert("Camera access denied. Please enable camera permissions.");
+                }
+            }
+
+            function stopCamera() {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    camera.srcObject = null;
+                    camera.style.display = 'none';
+                    startCameraBtn.style.display = 'inline-block';
+                    captureBarcodeBtn.style.display = 'none';
+                    stopCameraBtn.style.display = 'none';
+                }
+            }
+
+            function captureAndScanBarcode() {
+                const ctx = canvas.getContext('2d');
+                canvas.width = camera.videoWidth;
+                canvas.height = camera.videoHeight;
+                ctx.drawImage(camera, 0, 0, canvas.width, canvas.height);
+
+                // Try to decode barcode from camera frame
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+                if (code) {
+                    checkBarcodeAPI(code.data);
+                    stopCamera();
+                } else {
+                    // If jsQR fails, send image to backend
+                    canvas.toBlob((blob) => {
+                        checkBarcodeAPI(null, blob);
+                        stopCamera();
+                    }, 'image/png');
+                }
+            }
+
+            // --- Event Listeners ---
+            navButtons.forEach(button => button.addEventListener('click', () => showPage(button.dataset.page)));
+            showLoginBtn.addEventListener('click', () => showHomeSection('login-section'));
+            showCreateAccountBtn.addEventListener('click', () => showHomeSection('create-account-section'));
+            backBtns.forEach(btn => btn.addEventListener('click', () => showHomeSection('welcome-section')));
+
+            // Form Submission
+            [newUsernameInput, newPasswordInput].forEach(input => input.addEventListener('keydown', e => e.key === 'Enter' && createAccountEnterBtn.click()));
+            [loginUsernameInput, loginPasswordInput].forEach(input => input.addEventListener('keydown', e => e.key === 'Enter' && loginEnterBtn.click()));
+            newItemInput.addEventListener('keydown', e => e.key === 'Enter' && addItemBtn.click());
+            newAllergenInput.addEventListener('keydown', e => e.key === 'Enter' && addAllergenBtn.click());
+
+            askBotBtn.addEventListener('click', askBot);
+            userInput.addEventListener('keydown', e => e.key === 'Enter' && askBot());
+
+            // START: Barcode validation listener
+            barcodeInput.addEventListener('input', () => {
+                const value = barcodeInput.value;
+                // This regex checks if the string contains only digits (0-9)
+                if (value && !/^\d+$/.test(value)) {
+                    barcodeError.classList.remove('hidden'); // Show error
+                } else {
+                    barcodeError.classList.add('hidden'); // Hide error
+                }
+            });
+            // END: Barcode validation listener
+
+            createAccountEnterBtn.addEventListener('click', () => {
+                const username = newUsernameInput.value.trim();
+                const password = newPasswordInput.value.trim();
+                createAccountError.textContent = '';
+                if (!username || !password) {
+                    createAccountError.textContent = 'Username and password cannot be empty.';
                     return;
                 }
-                Users[currentUser].allergens.push(allergenText);
-                newAllergenInput.value = '';
-                renderAllergens();
-            }
-        });
-
-        // --- Gemini API Logic ---
-        generateRecipesBtn.addEventListener('click', async () => {
-            if (!currentUser || !Users[currentUser]) {
-                recipeResults.innerHTML = '<p class="text-red-500">Please log in to generate recipes.</p>';
-                return;
-            }
-
-            const ingredients = Users[currentUser].shoppingList
-                .filter(item => item.category === 'food' && !item.checked)
-                .map(item => item.text);
-            
-            const allergens = Users[currentUser].allergens;
-
-            if (ingredients.length === 0) {
-                recipeResults.innerHTML = '<p>Your shopping list has no unchecked food items. Add some to get recipe ideas!</p>';
-                return;
-            }
-
-            recipeResults.innerHTML = '<p>Generating delicious ideas...</p>';
-
-            const apiKey = "AIzaSyA8bdRVzt64ydZD7ar6csDggIQ-5Opjvsc"; // IMPORTANT: Replace with your actual API key
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const prompt = `Based on the following ingredients: ${ingredients.join(', ')}. Please provide 2-3 simple recipe ideas. IMPORTANT: These recipes must NOT contain any of the following allergens: ${allergens.join(', ')}. If there are no allergens listed, you can ignore this constraint. For each recipe, provide a name, a list of ingredients (including items not on the provided list), and simple instructions. Format the response in simple HTML using h3 for recipe names, ul for ingredients, and p for instructions.`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                if (text) {
-                    recipeResults.innerHTML = text;
+                if (Users.hasOwnProperty(username)) {
+                    createAccountError.textContent = 'This account is already in use.';
                 } else {
-                    recipeResults.innerHTML = '<p class="text-red-500">Sorry, I couldn\'t generate any ideas right now. The response from the model was empty.</p>';
+                    Users[username] = { password: password, shoppingList: [], allergens: [] };
+                    handleLoginSuccess(username);
                 }
-            } catch (error) {
-                console.error('Gemini API Error:', error);
-                recipeResults.innerHTML = `<p class="text-red-500">An error occurred while generating recipes. Please check the console for details.</p>`;
-            }
-        });
+            });
 
-        // --- Initial State ---
-        showPage('home');
-    });
-</script>
+            loginEnterBtn.addEventListener('click', () => {
+                const username = loginUsernameInput.value.trim();
+                const password = loginPasswordInput.value.trim();
+                loginError.textContent = '';
+                if (Users.hasOwnProperty(username) && Users[username].password === password) {
+                    handleLoginSuccess(username);
+                } else {
+                    loginError.textContent = 'Invalid username or password.';
+                }
+            });
+
+            addItemBtn.addEventListener('click', () => {
+                const itemText = newItemInput.value.trim();
+                shoppingListError.textContent = '';
+                if (!itemText) {
+                    shoppingListError.textContent = 'Please enter an item name.';
+                    return;
+                }
+                if (currentUser && Users[currentUser]) {
+                    const newItem = { id: Date.now(), text: itemText, category: newItemCategory.value, checked: false };
+                    Users[currentUser].shoppingList.push(newItem);
+                    newItemInput.value = '';
+                    renderShoppingList();
+                }
+            });
+
+            addAllergenBtn.addEventListener('click', () => {
+                const allergenText = newAllergenInput.value.trim();
+                allergenError.textContent = '';
+                if (!allergenText) {
+                    allergenError.textContent = 'Please enter an allergen.';
+                    return;
+                }
+                if (currentUser && Users[currentUser]) {
+                    if (Users[currentUser].allergens.includes(allergenText)) {
+                        allergenError.textContent = 'Allergen already listed.';
+                        return;
+                    }
+                    Users[currentUser].allergens.push(allergenText);
+                    newAllergenInput.value = '';
+                    renderAllergens();
+                }
+            });
+
+            // --- Gemini API Logic ---
+            generateRecipesBtn.addEventListener('click', async () => {
+                if (!currentUser || !Users[currentUser]) {
+                    recipeResults.innerHTML = '<p class="text-red-500">Please log in to generate recipes.</p>';
+                    return;
+                }
+
+                const ingredients = Users[currentUser].shoppingList
+                    .filter(item => item.category === 'food' && !item.checked)
+                    .map(item => item.text);
+
+                const allergens = Users[currentUser].allergens;
+
+                if (ingredients.length === 0) {
+                    recipeResults.innerHTML = '<p>Your shopping list has no unchecked food items. Add some to get recipe ideas!</p>';
+                    return;
+                }
+
+                recipeResults.innerHTML = '<p>Generating delicious ideas...</p>';
+
+                const apiKey = "AIzaSyA8bdRVzt64ydZD7ar6csDggIQ-5Opjvsc"; // IMPORTANT: Replace with your actual API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const prompt = `Based on the following ingredients: ${ingredients.join(', ')}. Please provide 2-3 simple recipe ideas. IMPORTANT: These recipes must NOT contain any of the following allergens: ${allergens.join(', ')}. If there are no allergens listed, you can ignore this constraint. For each recipe, provide a name, a list of ingredients (including items not on the provided list), and simple instructions. Format the response in simple HTML using h3 for recipe names, ul for ingredients, and p for instructions.`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        recipeResults.innerHTML = text;
+                    } else {
+                        recipeResults.innerHTML = '<p class="text-red-500">Sorry, I couldn\'t generate any ideas right now. The response from the model was empty.</p>';
+                    }
+                } catch (error) {
+                    console.error('Gemini API Error:', error);
+                    recipeResults.innerHTML = `<p class="text-red-500">An error occurred while generating recipes. Please check the console for details.</p>`;
+                }
+            });
+
+            // Barcode Scanner Event Listeners (add with your other event listeners)
+            startCameraBtn.addEventListener('click', startCamera);
+            stopCameraBtn.addEventListener('click', stopCamera);
+            captureBarcodeBtn.addEventListener('click', captureAndScanBarcode);
+
+            imageUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    uploadFileName.textContent = `Selected: ${file.name}`;
+                    checkBarcodeAPI(null, file);
+                }
+            });
+
+            checkBarcodeBtn.addEventListener('click', () => {
+                const barcode = barcodeInput.value.trim();
+                barcodeError.classList.add('hidden');
+
+                if (!barcode || !/^\d+$/.test(barcode)) {
+                    barcodeError.classList.remove('hidden');
+                    return;
+                }
+
+                checkBarcodeAPI(barcode);
+            });
+
+            barcodeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    checkBarcodeBtn.click();
+                }
+            });
+
+            barcodeInput.addEventListener('input', () => {
+                const value = barcodeInput.value;
+                if (value && !/^\d+$/.test(value)) {
+                    barcodeError.classList.remove('hidden');
+                } else {
+                    barcodeError.classList.add('hidden');
+                }
+            });
+
+            // --- Initial State ---
+            showPage('home');
+        });
+    </script>
 
 </body>
+
 </html>
