@@ -21,9 +21,9 @@ Your AI-powered allergy-safe product scanner. Scan barcodes, get instant allerge
 ### Setup & Run
 
 1. **Download the files**
-   - `ragagent-hackathon.py` (backend server)
+   - `ragagent-hackathon.py` (backend server) (in the "code" file)
    - `withapi.html` (frontend)
-   - `vectorizer.pkl`, `best_xgb_model.pkl`, `mlb.pkl` (ML models)
+   - `vectorizer.pkl`, `best_xgb_model.pkl`, `mlb.pkl` (ML models) (also in the "code" file)
 
 2. **Install Python packages**
    ```bash
