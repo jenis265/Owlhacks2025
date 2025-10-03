@@ -32,13 +32,14 @@ Your AI-powered allergy-safe product scanner. Scan barcodes, get instant allerge
 3. **Start the backend server**
   python ragagent-hackathon.py
   Keep this terminal window open. You should see:
+
   INFO: Uvicorn running on http://0.0.0.0:7860
 
-4. **Start the frontend server**
+5. **Start the frontend server**
   Open a new terminal window and run:
   python -m http.server 8000
 
-5. **Open in browser**
+6. **Open in browser**
   Go to: http://localhost:8000/withapi.html
 
 ### Usage 
